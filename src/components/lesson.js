@@ -9,6 +9,10 @@ function Lesson(props) {
   const [id, setId] = useState("");
   const [refresh, setRefresh] = useState(false);
 
+  useEffect(() => {
+    document.title = "TunysNotes | Lesson";
+  }, []);
+
   let history = useHistory();
   useEffect(() => {
     if (props.apiURL === "") return;
@@ -23,6 +27,7 @@ function Lesson(props) {
       })
       .then((res) => {
         setData(res.data);
+        document.title = "TunysNotes | " + res.data.name;
       });
   }, [props.apiURL, refresh]);
 
@@ -52,7 +57,7 @@ function Lesson(props) {
   };
 
   return (
-    <div>
+    <div className="mb-3">
       {typeof data !== "undefined" ? (
         <div className="container">
           <div className="row">

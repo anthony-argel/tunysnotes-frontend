@@ -8,6 +8,9 @@ function Topic(props) {
   const [lessonDescription, setLessonDescription] = useState("");
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
+    document.title = "TunysNotes | " + topic;
+  }, []);
+  useEffect(() => {
     if (props.apiURL === "") return;
     fetch(props.apiURL + "/topic/" + topic, {
       mode: "cors",
@@ -45,7 +48,7 @@ function Topic(props) {
   };
 
   return (
-    <div>
+    <div className="mb-3">
       {typeof data !== "undefined" ? (
         <div className="container">
           <div className="row">

@@ -5,13 +5,14 @@ import Topic from "./components/topic";
 import Login from "./components/login";
 import Lesson from "./components/lesson";
 import Read from "./components/read";
+import NavBar from "./components/navbar";
 
 function App() {
   const [apiURL, setAPIURL] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setAdmin] = useState(false);
   useEffect(() => {
-    setAPIURL("http://localhost:3000");
+    setAPIURL("https://serene-stream-83663.herokuapp.com");
     verifyToken();
   }, []);
 
@@ -20,7 +21,7 @@ function App() {
       return;
     }
 
-    fetch("http://localhost:3000/user/verify", {
+    fetch("https://serene-stream-83663.herokuapp.com/user/verify", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,29 +46,45 @@ function App() {
 
   return (
     <div className="app">
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            <Home></Home>
-          </Route>
-          <Route path="/login" exact>
-            <Login
-              apiURL={apiURL}
-              setLogin={setLoggedIn}
-              setAdmin={setAdmin}
-            ></Login>
-          </Route>
-          <Route path="/:topic" exact>
-            <Topic apiURL={apiURL} isAdmin={isAdmin}></Topic>
-          </Route>
-          <Route path="/:topic/lesson/:lesson" exact>
-            <Lesson apiURL={apiURL} isAdmin={isAdmin}></Lesson>
-          </Route>
-          <Route path="/:topic/read/:postid" exact>
-            <Read apiURL={apiURL} isAdmin={isAdmin}></Read>
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <div style={{ minHeight: "97vh" }}>
+        <BrowserRouter>
+          <NavBar></NavBar>
+          <Switch>
+            <Route path="/" exact>
+              <Home apiURL={apiURL}></Home>
+            </Route>
+            <Route path="/login" exact>
+              <Login
+                apiURL={apiURL}
+                setLogin={setLoggedIn}
+                setAdmin={setAdmin}
+              ></Login>
+            </Route>
+            <Route path="/:topic" exact>
+              <Topic apiURL={apiURL} isAdmin={isAdmin}></Topic>
+            </Route>
+            <Route path="/:topic/lesson/:lesson" exact>
+              <Lesson apiURL={apiURL} isAdmin={isAdmin}></Lesson>
+            </Route>
+            <Route path="/:topic/read/:postid" exact>
+              <Read apiURL={apiURL} isAdmin={isAdmin}></Read>
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </div>
+      <div
+        style={{ backgroundColor: "black", minHeight: "3vh" }}
+        className="text-center"
+      >
+        <a
+          style={{ textDecoration: "none", color: "white" }}
+          target="_blank"
+          rel="noreferrer"
+          href="https://anthonyargel.com/"
+        >
+          Developer
+        </a>
+      </div>
     </div>
   );
 }

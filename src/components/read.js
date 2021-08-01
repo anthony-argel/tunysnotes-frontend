@@ -6,6 +6,11 @@ function Read(props) {
   let { topic, postid } = useParams();
   const [title, setTitle] = useState("");
   const [post, setPost] = useState("");
+
+  useEffect(() => {
+    document.title = "TunysNotes | Read";
+  }, []);
+
   useEffect(() => {
     fetch("https://quiet-retreat-88465.herokuapp.com/blog/" + postid, {
       method: "GET",
@@ -13,9 +18,10 @@ function Read(props) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setTitle(res[0].title);
         setPost(res[0].post);
+
+        document.title = "TunysNotes | " + res[0].title;
       });
   }, [props.apiURL]);
 
